@@ -13,9 +13,10 @@ function App() {
     //when the app loads,we need to listen to the database and fetch new todos as they get added/removed.
     //this code here, fires when the app.js loads
     db.collection("todos").orderBy('timestamp','desc').onSnapshot((snapshot) => {
-      setTodos(snapshot.docs.map((doc) => doc.data().todo));
+      setTodos(snapshot.docs.map((doc) => ({id: doc.id, todo:doc.data().todo})))
     });
   }, [])
+
 
   const addTodo = (event) => {
     event.preventDefault(); //will stop the refresh after submit button gets hit
